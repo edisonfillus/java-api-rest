@@ -5,7 +5,7 @@
 	<artifactId>hello-java-api-rest</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1</version>
-	<name>hello-java-api-rest</name>
+	<name>java-api-rest</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -140,6 +140,24 @@
 			<artifactId>log4j-core</artifactId>
 			<version>${log4j.version}</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		  <groupId>io.jsonwebtoken</groupId>
+		  <artifactId>jjwt-api</artifactId>
+		  <version>0.10.5</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>io.jsonwebtoken</groupId>
+		  <artifactId>jjwt-impl</artifactId>
+		  <version>0.10.5</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>io.jsonwebtoken</groupId>
+		  <artifactId>jjwt-jackson</artifactId>
+		  <version>0.10.5</version>
 		</dependency>
 
 

@@ -18,6 +18,9 @@ public class ApplicationConfig extends Application {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = new HashMap<String, Object>();
         properties.put("jersey.config.server.provider.packages", "com.memorynotfound.rs");
+        //properties.put("com.sun.jersey.spi.container.ResourceFilters", "com.sun.jersey.api.container.filter.RolesAllowedResourcFilterFactory");
+        
         return properties;
     }
+    
 }
