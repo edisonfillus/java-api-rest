@@ -16,7 +16,6 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.project.example.NotificationRestServiceTest;
 import org.project.example.security.ApiKey;
 
 import io.jsonwebtoken.JwtBuilder;

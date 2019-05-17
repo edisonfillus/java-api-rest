@@ -1,1 +1,1 @@
-# hello-java-api-rest
+# java-api-rest
