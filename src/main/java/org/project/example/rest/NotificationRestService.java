@@ -25,18 +25,25 @@ public class NotificationRestService {
 	@Context
 	SecurityContext securityContext;
 
-
+	
+	@GET
+	@Path("hello")
+	public String hello() {
+		return "Hello!";
+	}
+	
+	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"admin"})
+    //@RolesAllowed({"admin"})
     public List<Notification> fetchAll() {
-    	System.out.println("Into the fetchAll!!!");
+    	//System.out.println("Into the fetchAll!!!");
     	
-    	Principal principal = securityContext.getUserPrincipal();
-    	String username = principal.getName();
+    	//Principal principal = securityContext.getUserPrincipal();
+    	//String username = principal.getName();
     	
     	
-    	System.out.println("User Principal: " + username);
+    	//System.out.println("User Principal: " + username);
     	
         // fetch all notifications
         List<Notification> notifications = new ArrayList<>();
