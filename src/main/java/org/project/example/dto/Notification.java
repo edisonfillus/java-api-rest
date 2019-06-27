@@ -1,11 +1,14 @@
 package org.project.example.dto;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Notification {
 
-    private Integer id;
+    private Long id;
     private String message;
 
     /**
@@ -14,16 +17,28 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Integer id, String message) {
+    public Notification(Long id, String message) {
         this.id = id;
         this.message = message;
     }
 
-    public Integer getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+    
+    
+
 }

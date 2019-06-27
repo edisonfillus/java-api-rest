@@ -41,6 +41,9 @@ public class NotificationRestServiceTest extends JerseyTest {
 
     @Test
     public void testFetchAll() {
+    	
+    	//curl -i -H "Accept: application/vnd.example.v1+json" http://localhost:8080/notifications
+
 
     	// Get Authentication Token
     	MultivaluedMap<String, String> formData = new MultivaluedHashMap<String, String>();
@@ -82,7 +85,7 @@ public class NotificationRestServiceTest extends JerseyTest {
 
     //@Test
     public void testUpdate(){
-        Notification notification = new Notification(1, "New user created at Antwerp");
+        Notification notification = new Notification(1l, "New user created at Antwerp");
         Response output = target("/notifications")
                 .request()
                 .put(Entity.entity(notification, MediaType.APPLICATION_JSON));
