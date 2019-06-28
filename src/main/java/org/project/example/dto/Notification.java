@@ -1,8 +1,5 @@
 package org.project.example.dto;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement

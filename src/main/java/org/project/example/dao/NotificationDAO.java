@@ -11,7 +11,7 @@ import org.project.example.dto.Notification;
 public class NotificationDAO {
 	
 	private static Map<Long, Notification> memorydb = new HashMap<Long, Notification>();
-	private static AtomicLong sequence = new AtomicLong(3);
+	private static AtomicLong sequence = new AtomicLong(2);
 
 	static {
 		memorydb.put(1l, new Notification(1l, "New user created"));

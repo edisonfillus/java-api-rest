@@ -103,6 +103,11 @@
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.28</version>
 		</dependency>
+		<dependency> <!-- Json Processing JSonObject -->
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-processing</artifactId>
+			<version>2.28</version>
+		</dependency>
 		<dependency> <!-- Dependency injection -->
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
