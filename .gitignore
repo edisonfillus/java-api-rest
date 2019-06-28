@@ -3,3 +3,5 @@
 /.settings/
 /.classpath
 /.project
+.vscode/launch.json
+.vscode/settings.json
