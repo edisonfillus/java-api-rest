@@ -70,9 +70,16 @@ public class NotificationRestService {
     @GET
     @Path("{id: \\d+}")
     @Produces({ MediaType.APPLICATION_JSON })
-    public Notification fetchBy(@PathParam("id") int id) {
+    public Response fetchBy(@PathParam("id") long id) {
+
         // fetch notification by id
-        return NotificationDAO.find(id);
+        Notification notification = NotificationDAO.find(id);
+        if (notification == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+
+        Response response = Response.ok(notification).build();
+        return response;
     }
 
     @POST
@@ -136,18 +143,6 @@ public class NotificationRestService {
 
     }
 
-    @GET
-    @Path("/images/{image}")
-    @Produces("image/*")
-    public Response getImage(@PathParam("image") String image) {
-        File f = new File(image);
-
-        if (!f.exists()) {
-            throw new WebApplicationException(404);
-        }
-
-        String mt = new MimetypesFileTypeMap().getContentType(f);
-        return Response.ok(f, mt).build();
-    }
+    
 
 }

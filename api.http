@@ -1,11 +1,14 @@
+### List All
 GET http://localhost:8080/notifications
 Accept: application/vnd.example.v2+json
 
-###
-
+### Get First
 GET http://localhost:8080/notifications/1
 
-###
+### Try to get a non existent
+GET http://localhost:8080/notifications/9999
+
+### Create new
 POST http://localhost:8080/notifications
 Content-Type: application/json
 
@@ -13,8 +16,7 @@ Content-Type: application/json
     "message":"My new message"
 }
 
-###
-
+### Try no change
 PUT http://localhost:8080/notifications/3
 Content-Type: application/json
 
@@ -23,7 +25,7 @@ Content-Type: application/json
     "message":"My changed message"
 }
 
-###
+### Check ID validation
 PUT http://localhost:8080/notifications/3
 Content-Type: application/json
 
@@ -31,3 +33,6 @@ Content-Type: application/json
     "id": 4,
     "message":"Id Mismatch"
 }
+
+### Get Image
+GET http://localhost:8080/image/not_exist.jpg
