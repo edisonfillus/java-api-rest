@@ -28,6 +28,8 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.linking.ProvideLink;
+import org.glassfish.jersey.linking.Binding;
 import org.project.example.dao.NotificationDAO;
 import org.project.example.dto.Notification;
 
@@ -90,7 +92,8 @@ public class NotificationRestService {
         // create notification
         notification = NotificationDAO.add(notification);
 
-        URI location = uriInfo.getAbsolutePathBuilder().path(String.valueOf(notification.getId())).build();
+        URI location = uriInfo.getAbsolutePathBuilder()
+            .path(String.valueOf(notification.getId())).build();
 
         /*
          * Link link = Link.fromUri("http://{host}/v1/notifications/{id}")
