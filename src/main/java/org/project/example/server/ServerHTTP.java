@@ -8,7 +8,6 @@ import javax.ws.rs.core.UriBuilder;
 import org.eclipse.jetty.server.Server;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.glassfish.jersey.jsonp.JsonProcessingFeature;
-import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 
@@ -22,7 +21,7 @@ public class ServerHTTP {
 			.property(JsonGenerator.PRETTY_PRINTING, true);
 		URI uri = UriBuilder.fromUri("http://localhost/").port(8080).build();
 		Server server = JettyHttpContainerFactory.createServer(uri, config);
-		System.out.println("Server running on URI " + uri.toString());
+		System.out.println("Server running on URI " + server.getURI().toString());
 	}
 
 }

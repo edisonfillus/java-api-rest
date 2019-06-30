@@ -80,7 +80,7 @@ public class AuthenticationRestService {
                                     .setIssuedAt(now)
                                     .setSubject(subject)
                                     .setIssuer(issuer)
-                                    .signWith(signatureAlgorithm, signingKey);
+                                    .signWith(signingKey,signatureAlgorithm);
      
         //if it has been specified, let's add the expiration
         if (ttlMillis >= 0) {
