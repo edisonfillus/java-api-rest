@@ -36,3 +36,8 @@ Content-Type: application/json
 
 ### Get Image
 GET http://localhost:8080/image/not_exist.jpg
+
+
+### SSE
+GET http://localhost:8080/events
+Content-Type: text/plain

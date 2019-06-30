@@ -13,6 +13,8 @@ import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -28,23 +30,27 @@ public class NotificationRestServiceTest extends JerseyTest {
 	
     @Override
     public Application configure() {
+        ResourceConfig resourceConfig = new ResourceConfig();
         enable(TestProperties.LOG_TRAFFIC);
         enable(TestProperties.DUMP_ENTITY);
-        ResourceConfig resourceConfig = new ResourceConfig();
         resourceConfig.register(NotificationRestService.class);
-        resourceConfig.register(AuthenticationRestService.class);
-        resourceConfig.register(AuthenticationFilter.class);
+        //resourceConfig.register(AuthenticationRestService.class);
+        //resourceConfig.register(AuthenticationFilter.class);
         //resourceConfig.register(AuthorizationFilter.class);
         //resourceConfig.register(RolesAllowedDynamicFeature.class);     
         return resourceConfig;
     }
 
-    @Test
+
+    
+  
+
+    //@Test
     public void testFetchAll() {
     	
     	//curl -i -H "Accept: application/vnd.example.v1+json" http://localhost:8080/notifications
 
-
+        /*
     	// Get Authentication Token
     	MultivaluedMap<String, String> formData = new MultivaluedHashMap<String, String>();
     	formData.add("username", "edisonkf");
@@ -53,13 +59,13 @@ public class NotificationRestServiceTest extends JerseyTest {
     	String token = authenticationResponse.readEntity(String.class);
     	assertEquals("should return status 200 on authentication", 200, authenticationResponse.getStatus());
     	assertNotNull("Should return token", token);
-    	    	    	
-        Response output = target("/notifications").request().header(HttpHeaders.AUTHORIZATION, "Bearer " + token).get();
-        assertEquals("should return status 200", 200, output.getStatus());
-        assertNotNull("Should return list", output.getEntity());
+        */
+        //Response output = target("/notifications").request().header(HttpHeaders.AUTHORIZATION, "Bearer " + token).get();
+        //assertEquals("should return status 200", 200, output.getStatus());
+        //assertNotNull("Should return list", output.getEntity());
     }
 
-    //@Test
+    @Test
     public void testFetchBy(){
         Response output = target("/notifications/1").request().get();
         assertEquals("Should return status 200", 200, output.getStatus());

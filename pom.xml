@@ -120,6 +120,12 @@
 			<version>2.28</version>
 		</dependency>
 
+		<dependency> <!-- For Server-Sent Events -->
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-sse</artifactId>
+			<version>2.28</version>
+		</dependency>
+
 		<!-- Log -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -130,6 +136,36 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+
+		<dependency> <!-- Route Log4j v1.2 to v2 -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+
+		 <dependency> <!-- Route Apache Commons Logging to Log4j -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+
+		 <dependency> <!-- Route SLF4J to Log4J -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+
+		 <dependency> <!-- Route Java Util Logging to Log4J -->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jul</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+
+		 <dependency> <!-- Web Servlet Support-->
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 

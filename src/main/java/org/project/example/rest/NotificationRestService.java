@@ -27,9 +27,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
-
-import org.glassfish.jersey.linking.ProvideLink;
-import org.glassfish.jersey.linking.Binding;
 import org.project.example.dao.NotificationDAO;
 import org.project.example.dto.Notification;
 
@@ -49,7 +46,7 @@ public class NotificationRestService {
         // fetch all notifications
         List<Notification> notifications = NotificationDAO.findAll();
 
-        GenericEntity entity = new GenericEntity<List<Notification>>(notifications) {
+        GenericEntity<List<Notification>> entity = new GenericEntity<List<Notification>>(notifications) {
         };
 
         Response response = Response.ok(entity).build();
