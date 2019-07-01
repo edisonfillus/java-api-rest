@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
 
-@WebServlet(name = "BlockingServlet", urlPatterns = "/blocking")
+//@WebServlet(name = "BlockingServlet", urlPatterns = "/blocking")
 public class BlockingServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 8425478659027973920L;

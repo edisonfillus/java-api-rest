@@ -66,10 +66,10 @@ public class JettyIntegrationTest
  
 
         // Set the compiled classes directory
-        URL[] urls = new URL[]{
-                new File("src/main/webapp").toPath().toFile().toURI().toURL(),
-                new File("target/classes").toPath().toFile().toURI().toURL()};
-        webapp.setClassLoader(new URLClassLoader(urls));
+        //URL[] urls = new URL[]{
+        //        new File("src/main/webapp").toPath().toFile().toURI().toURL(),
+        //        new File("target/classes").toPath().toFile().toURI().toURL()};
+        //webapp.setClassLoader(new URLClassLoader(urls));
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/classes/.*");
         
 

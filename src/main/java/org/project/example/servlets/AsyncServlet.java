@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "AsyncServlet", urlPatterns = "/async", asyncSupported = true)
+//@WebServlet(name = "AsyncServlet", urlPatterns = "/async", asyncSupported = true)
 public class AsyncServlet extends HttpServlet {
     private static String HEAVY_RESOURCE 
       = "This is some heavy resource that will be served in an async way";

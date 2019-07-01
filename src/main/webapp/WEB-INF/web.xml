@@ -1,12 +1,9 @@
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-
-<web-app 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://java.sun.com/xml/ns/javaee" 
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-    metadata-complete="false"
-	version="3.0">
-		
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+	
 	<display-name>API REST</display-name>
 	
 	<servlet>
@@ -24,4 +21,23 @@
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>BlockingServlet</servlet-name>
+		<servlet-class>org.project.example.servlets.BlockingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlockingServlet</servlet-name>
+		<url-pattern>/blocking</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AsyncServlet</servlet-name>
+		<servlet-class>org.project.example.servlets.AsyncServlet</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AsyncServlet</servlet-name>
+		<url-pattern>/async</url-pattern>
+	</servlet-mapping>
+-
 </web-app>
