@@ -102,6 +102,7 @@ public class NotificationRestServiceTest extends JerseyTest {
     public void testDelete(){
         Response output = target("/notifications/1").request().delete();
         assertEquals("Should return status 204", 204, output.getStatus());
+        
     }
 
 }
