@@ -1,6 +1,6 @@
 package org.project.example.servlets;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URI;
 import javax.json.JsonObject;
@@ -12,32 +12,29 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.servlet.ServletHandler;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class BlockingServletTest
-{
+public class BlockingServletTest {
     private static Server server;
     private static URI serverUri;
     private static Logger log = LogManager.getLogger(BlockingServletTest.class);
-	
 
-    @BeforeClass
-    public static void startJetty() throws Exception
-    {
+    @BeforeAll
+    public static void startJetty() throws Exception {
         // Create Server
         server = new Server();
         ServerConnector connector = new ServerConnector(server);
         connector.setPort(0); // auto-bind to available port
-		server.addConnector(connector);
+        server.addConnector(connector);
 
         // Add Servlets
-        HandlerList handlerList=new HandlerList();
+        HandlerList handlerList = new HandlerList();
         ServletHandler servletHandler = new ServletHandler();
         servletHandler.addServletWithMapping(BlockingServlet.class, "/blocking");
-		handlerList.addHandler(servletHandler);
-		server.setHandler(handlerList);
+        handlerList.addHandler(servletHandler);
+        server.setHandler(handlerList);
 
         // Start Server
         server.start();
@@ -45,10 +42,10 @@ public class BlockingServletTest
         // Determine Base URI for Server
         String host = connector.getHost() == null ? "localhost" : connector.getHost();
         int port = connector.getLocalPort();
-        serverUri = new URI(String.format("http://%s:%d",host,port));
+        serverUri = new URI(String.format("http://%s:%d", host, port));
     }
 
-    @AfterClass
+    @AfterAll
     public static void stopJetty()
     {
         try
@@ -69,8 +66,8 @@ public class BlockingServletTest
                             .target(serverUri).path("/blocking")
                             .request().get();
       
-        assertEquals("Should return status 200", 200, output.getStatus());
-        assertEquals("Should return status=blocking", "blocking", output.readEntity(JsonObject.class).getString("status"));
+        assertEquals(200, output.getStatus(),"Should return status 200");
+        assertEquals("blocking", output.readEntity(JsonObject.class).getString("status"),"Should return status=blocking");
         
     }
 }

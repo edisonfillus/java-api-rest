@@ -1,7 +1,6 @@
 package org.project.example.server;
 
 import java.io.File;
-
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
@@ -20,7 +19,6 @@ import org.eclipse.jetty.webapp.MetaInfConfiguration;
 public class JettyServer {
 
     
-
 	public static void main(String[] args) throws Exception {
 
         // Create ThreadPool
@@ -40,7 +38,11 @@ public class JettyServer {
 		webapp.setContextPath("/");
 		webapp.setExtractWAR(false);
 		webapp.setResourceBase(new File("src/main/webapp/").getAbsolutePath());
-        // Start Full Servlet Container
+		
+		webapp.setAttribute("org.eclipse.jetty.websocket.jsr356",Boolean.TRUE);
+
+		
+		// Start Full Servlet Container
         webapp.setConfigurations(new Configuration[] 
         { 
             new AnnotationConfiguration(),
