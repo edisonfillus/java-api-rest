@@ -20,9 +20,9 @@ import org.project.example.dto.Message;
   value="/chat/{username}", 
   decoders = MessageDecoder.class, 
   encoders = MessageEncoder.class )
-public class ChatEndpoint {
+public class ChatEndPointServer {
     private Session session;
-    private static final Set<ChatEndpoint> chatEndpoints = new CopyOnWriteArraySet<>();
+    private static final Set<ChatEndPointServer> chatEndpoints = new CopyOnWriteArraySet<>();
     private static HashMap<String, String> users = new HashMap<>();
 
     @OnOpen
