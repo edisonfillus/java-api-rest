@@ -5,24 +5,17 @@ import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 import org.project.example.dto.Notification;
-import org.project.example.rest.AuthenticationRestService;
 import org.project.example.rest.NotificationRestService;
-import org.project.example.security.AuthenticationFilter;
 
 public class NotificationRestServiceTest extends JerseyTest {
 

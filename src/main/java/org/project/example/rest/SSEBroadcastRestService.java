@@ -18,11 +18,16 @@ import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseBroadcaster;
 import javax.ws.rs.sse.SseEventSink;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 @Singleton
 @Path("broadcast")
 public class SSEBroadcastRestService {
     private Sse sse;
     private SseBroadcaster broadcaster;
+
+    static Logger log = LogManager.getLogger(SSEBroadcastRestService.class);
 
     public SSEBroadcastRestService(@Context final Sse sse) {
         this.sse = sse;
@@ -58,8 +63,7 @@ public class SSEBroadcastRestService {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error(e);
                 }
 
                 JsonObject msg = Json.createObjectBuilder()

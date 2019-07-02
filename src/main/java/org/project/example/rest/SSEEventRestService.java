@@ -14,8 +14,13 @@ import javax.ws.rs.sse.OutboundSseEvent;
 import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseEventSink;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 @Path("events")
 public class SSEEventRestService {
+
+    static Logger log = LogManager.getLogger(SSEBroadcastRestService.class);
 
     @GET
     @Produces(MediaType.SERVER_SENT_EVENTS)
@@ -26,8 +31,7 @@ public class SSEEventRestService {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error(e);
                 }
 
                 JsonObject msg = Json.createObjectBuilder()

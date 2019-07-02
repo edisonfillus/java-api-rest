@@ -8,23 +8,21 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //@WebServlet(name = "AsyncServlet", urlPatterns = "/async", asyncSupported = true)
 public class AsyncServlet extends HttpServlet {
-    private static String HEAVY_RESOURCE 
-      = "This is some heavy resource that will be served in an async way";
- 
-    protected void doGet(
-      HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-  
-        ByteBuffer content = ByteBuffer.wrap(
-          HEAVY_RESOURCE.getBytes(StandardCharsets.UTF_8));
- 
+
+    private static final long serialVersionUID = -3107000083991075939L;
+    private static String HEAVY_RESOURCE = "This is some heavy resource that will be served in an async way";
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        ByteBuffer content = ByteBuffer.wrap(HEAVY_RESOURCE.getBytes(StandardCharsets.UTF_8));
+
         AsyncContext async = request.startAsync();
         ServletOutputStream out = response.getOutputStream();
         out.setWriteListener(new WriteListener() {
@@ -39,7 +37,7 @@ public class AsyncServlet extends HttpServlet {
                     out.write(content.get());
                 }
             }
- 
+
             @Override
             public void onError(Throwable t) {
                 getServletContext().log("Async Error", t);
