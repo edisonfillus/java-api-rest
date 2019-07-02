@@ -1,15 +1,15 @@
 ### List All
-GET http://localhost:8080/notifications
+GET http://localhost:8080/api/notifications
 Accept: application/vnd.example.v2+json
 
 ### Get First
-GET http://localhost:8080/notifications/1
+GET http://localhost:8080/api/notifications/1
 
 ### Try to get a non existent
-GET http://localhost:8080/notifications/9999
+GET http://localhost:8080/api/notifications/9999
 
 ### Create new
-POST http://localhost:8080/notifications
+POST http://localhost:8080/api/notifications
 Content-Type: application/json
 
 {
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ### Try no change
-PUT http://localhost:8080/notifications/3
+PUT http://localhost:8080/api/notifications/3
 Content-Type: application/json
 
 {
@@ -26,18 +26,28 @@ Content-Type: application/json
 }
 
 ### Check ID validation
-PUT http://localhost:8080/notifications/3
+PUT http://localhost:8080/api/notifications/3
 Content-Type: application/json
-
 {
     "id": 4,
     "message":"Id Mismatch"
 }
 
 ### Get Image
-GET http://localhost:8080/image/not_exist.jpg
-
+GET http://localhost:8080/api/images/not_exist.jpg
+Accept: image/jpeg
 
 ### SSE
-GET http://localhost:8080/events
+GET http://localhost:8080/api/events
 Content-Type: text/plain
+
+### Web Sockets
+curl --include \
+     --no-buffer \
+     --header "Connection: Upgrade" \
+     --header "Upgrade: websocket" \
+     --header "Host: localhost:8080" \
+     --header "Origin: http://localhost:8080" \
+     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+     --header "Sec-WebSocket-Version: 13" \
+     http://localhost:8080/chat/name

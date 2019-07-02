@@ -3,6 +3,8 @@ package org.project.example.rest;
 import java.io.File;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,7 +21,10 @@ public class ImageRestService {
         File f = new File(image);
 
         if (!f.exists()) {
-            return Response.status(Status.NOT_FOUND).build();
+            JsonObject myObject = Json.createObjectBuilder()
+            .add("error", "Image Not Found")
+            .build();
+            return Response.status(Status.NOT_FOUND).entity(myObject).build();
         }
 
         String mt = new MimetypesFileTypeMap().getContentType(f);

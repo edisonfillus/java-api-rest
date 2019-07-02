@@ -67,7 +67,10 @@ public class NotificationRestService {
         // fetch notification by id
         Notification notification = NotificationDAO.find(id);
         if (notification == null) {
-            return Response.status(Status.NOT_FOUND).build();
+            JsonObject myObject = Json.createObjectBuilder()
+            .add("error", "Notification ID Not Found")
+            .build();
+            return Response.status(Status.NOT_FOUND).entity(myObject).build();
         }
 
         Response response = Response.ok(notification).build();
@@ -100,7 +103,7 @@ public class NotificationRestService {
     @Path("{id: \\d+}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(Notification notification, @PathParam("id") long id) {
+    public Response update(@PathParam("id") long id, Notification notification) {
 
         if (notification.getId() == null || notification.getId() != id) {
             JsonObject myObject = Json.createObjectBuilder()
