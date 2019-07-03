@@ -7,6 +7,6 @@ public class JerseyApplicationConfig extends ResourceConfig {
     public JerseyApplicationConfig() {
         packages("org.project.example.rest");
         property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "templates");
-        register(FreemarkerMvcFeature.class);;
+        register(FreemarkerMvcFeature.class);
     }
 }
