@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.project.example.dto.Notification;
+import org.project.example.rest.JerseyApplicationConfig;
 import org.project.example.rest.NotificationRestService;
 
 @TestMethodOrder(OrderAnnotation.class)
@@ -47,8 +48,8 @@ public class NotificationRestServiceTest {
         server.setHandler(servletContextHandler);
         ServletHolder servletHolder = servletContextHandler.addServlet(ServletContainer.class, "/api/*");
         servletHolder.setInitOrder(0);
-        servletHolder.setInitParameter("jersey.config.server.provider.packages",
-                NotificationRestService.class.getPackage().getName());
+        servletHolder.setInitParameter("javax.ws.rs.Application",
+                JerseyApplicationConfig.class.getName());
         // Start Server
         server.start();
 
@@ -116,6 +117,16 @@ public class NotificationRestServiceTest {
                 .delete();
         assertEquals(204, output.getStatus(),"Should return status 204");
 
+    }
+
+
+    @Test
+    @Order(6) 
+    public void testFetchByHtml() {
+        Response output = ClientBuilder.newClient().target(serverUri).path("/api").path("/notifications/1/html").request()
+                .get();
+        assertEquals(200, output.getStatus(), "Should return status 200");
+        assertNotNull(output.getEntity(),"Should return notification");
     }
 
 

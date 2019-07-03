@@ -1,7 +1,9 @@
 package org.project.example.rest;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -13,6 +15,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +23,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+
+import org.glassfish.jersey.server.mvc.Template;
 import org.project.example.dao.NotificationDAO;
 import org.project.example.dto.Notification;
 
@@ -76,6 +81,23 @@ public class NotificationRestService {
         Response response = Response.ok(notification).build();
         return response;
     }
+
+
+    @GET
+    @Template(name = "/notification.ftl")
+    @Path("{id: \\d+}/html")
+    @Produces(MediaType.TEXT_HTML)
+    public Map<String, Object> fetchByHTML(@PathParam("id") long id) {
+        Map<String, Object> model = new HashMap<>();
+        // fetch notification by id
+        Notification notification = NotificationDAO.find(id);
+        if (notification == null) {
+            throw new WebApplicationException("Notification ID Not Found");
+        }
+        model.put("notification", notification);
+        return model;
+    }
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

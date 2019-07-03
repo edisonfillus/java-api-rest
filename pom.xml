@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.project.example</groupId>
-	<artifactId>hello-java-api-rest</artifactId>
+	<artifactId>java-api-rest</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1</version>
-	<name>java-api-rest</name>
+	<name>{project.artifactId}</name>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,10 +12,11 @@
 	
 	
 	<build>
-		<finalName>api-rest</finalName>
+		<finalName>{project.artifactId}</finalName>
 		<plugins>
+			
+			<!-- Compiler configuration -->
 			<plugin>
-				<!-- Set Java Version -->
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
@@ -23,20 +24,21 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			
+			<!-- Set Surefire Plugin for Tests -->
 			<plugin>
-				<!-- Set Surefire Plugin for Tests -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 			</plugin>
+			<!-- War plugin to .war generation -->
 			<plugin>
-				<!-- War plugin to .war generation -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
 			</plugin>
 			
-			<!-- JaCoCo plugin -->
+			<!-- JaCoCo plugin for Test Coverage -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -66,8 +68,9 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- Jetty Embedded - mvn jetty:run -->
 			<plugin>
-				<!-- mvn jetty:run -->
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.4.19.v20190610</version>
@@ -84,99 +87,88 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-
+		
 		<!-- Websockets Support -->
 		<dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
 		
-		<!-- Configurações para JAX-RS e Jersey -->
+		
+		<!-- API REST - Jersey JAX-RS Servlet Container -->
 		<dependency>
-			<!-- Servlet Container -->
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
 			<version>2.29</version>
 		</dependency>
+		
+		<!-- API REST - Jersey Json Java Binding -->
 		<dependency>
-			<!-- Json Java Binding -->
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.29</version>
 		</dependency>
+		
+		<!-- API REST - Jersey JSonObject -->
 		<dependency>
-			<!-- Json Processing JSonObject -->
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-processing</artifactId>
 			<version>2.29</version>
 		</dependency>
+		
+		<!-- API REST - Jersey Dependency injection -->
 		<dependency>
-			<!-- Dependency injection -->
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 			<version>2.29</version>
 		</dependency>
 		
-		
+		<!-- API REST - Jersey Server-Sent Events -->
 		<dependency>
-			<!-- For Server-Sent Events -->
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-sse</artifactId>
 			<version>2.29</version>
 		</dependency>
 		
-		<!-- Log -->
+		<!-- API REST - Jersey Extension for MVC and Freemarker Templates -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-mvc-freemarker</artifactId>
+			<version>2.29</version>
+		</dependency>
+		
+		
+		<!-- Log4j - API -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 		
+		<!-- Log4j - Core -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 		
+		<!-- Log4j - Route Log4j v1.2 to v2 -->
 		<dependency>
-			<!-- Route Log4j v1.2 to v2 -->
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 		
+		<!-- Log4j - Route SLF4J to Log4J -->
 		<dependency>
-			<!-- Route Apache Commons Logging to Log4j -->
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-jcl</artifactId>
-			<version>2.11.2</version>
-		</dependency>
-		
-		<dependency>
-			<!-- Route SLF4J to Log4J -->
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 		
-		<dependency>
-			<!-- Route Java Util Logging to Log4J -->
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-jul</artifactId>
-			<version>2.11.2</version>
-		</dependency>
-		
-		<dependency>
-			<!-- Web Servlet Support-->
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-web</artifactId>
-			<version>2.11.2</version>
-		</dependency>
-		
-		
-		<!-- TESTES UNITÁRIOS -->
+		<!-- JUnit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -184,6 +176,7 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- JUnit -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -206,7 +199,7 @@
 			<version>2.29</version>
 			<scope>test</scope>
 		</dependency>-->
-
+		
 		<!-- Jetty Provider for Jersey API TEST Integration Tests
 		<dependency>
 			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
@@ -223,38 +216,39 @@
 			<scope>test</scope>
 		</dependency>-->
 		
+		<!-- Embedded Jetty Server for Full Integration Tests / Serverless -->
 		<dependency>
-			<!-- Embedded Jetty Server for Full Integration Tests / Serverless -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Servlet support for Jetty Embedded -->
 		<dependency>
-			<!-- Servlet support for Jetty Embedded -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Full webapp support for Jetty Embedded -->
 		<dependency>
-			<!-- Full webapp support for Jetty Embedded -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Support for servlet annotations (v3.0)-->
 		<dependency>
-			<!-- Support for servlet annotations -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-annotations</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Support for JNDI Datasources, JAAS-->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-plus</artifactId>
@@ -262,24 +256,24 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Support for Websockets-->
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>javax-websocket-server-impl</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
-		 </dependency>
-
-		 
+		</dependency>
+		
+		<!-- Support for JSP -->
 		<dependency>
-			<!-- Support for JSP -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>apache-jsp</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Support for JSTL -->
 		<dependency>
-			<!-- Support for JSTL -->
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>apache-jstl</artifactId>
 			<version>9.4.19.v20190610</version>
