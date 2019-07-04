@@ -39,9 +39,12 @@ public class SSEEventRestService {
                     .add("ts", new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(Calendar.getInstance().getTime()))
                     .build();
 
-                final OutboundSseEvent event = sse.newEventBuilder().name("updates")
-                        .data(String.class, msg.toString()).build();
+                final OutboundSseEvent event = sse.newEventBuilder()
+                    .id(String.valueOf(i))
+                    .name("updates")
+                    .data(String.class, msg.toString()).build();
                 eventSink.send(event);
+                log.info("Message sent: " + msg.toString());
             }
             eventSink.close();
         }).start();

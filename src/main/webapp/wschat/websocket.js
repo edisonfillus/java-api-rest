@@ -11,12 +11,12 @@ function connect() {
     ws = new WebSocket(url);
 
     // Connection opened
-    ws.addEventListener('open', function (event) {
+    ws.onopen = function (event) {
         var json = JSON.stringify({
             "content": 'Hello Server!'
         });
         ws.send(json);
-    });
+    };
 
     // Listen for messages
     ws.onmessage = function (event) {
@@ -25,6 +25,22 @@ function connect() {
         var message = JSON.parse(event.data);
         log.innerHTML += message.from + " : " + message.content + "\n";
     };
+
+    // A connection could not be made
+    ws.onerror = function (event) {
+        console.log(event);
+    }
+
+    // A connection was closed
+    ws.onclose = function(code, reason) {
+        console.log(code, reason);
+    }
+
+    // Close the connection when the window is closed
+    window.addEventListener('beforeunload', function() {
+        ws.close();
+    });
+
 }
 
 function send() {
@@ -33,3 +49,4 @@ function send() {
     };
     ws.send(JSON.stringify(msg));
 }
+
