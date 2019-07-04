@@ -93,6 +93,15 @@ public class NotificationRestServiceTest {
 
     @Test
     @Order(3) 
+    public void testFetchByHtml() {
+        Response output = ClientBuilder.newClient().target(serverUri).path("/api").path("/notifications/1/html").request()
+                .get();
+        assertEquals(200, output.getStatus(), "Should return status 200");
+        assertNotNull(output.getEntity(),"Should return notification");
+    }
+
+    @Test
+    @Order(4) 
     public void testFetchByFail_DoesNotHaveDigit() {
         Response output = ClientBuilder.newClient().target(serverUri).path("/api").path("/notifications/no-id-digit")
                 .request().get();
@@ -100,7 +109,7 @@ public class NotificationRestServiceTest {
     }
 
     @Test
-    @Order(4) 
+    @Order(5) 
     public void testUpdate() {
         Notification notification = new Notification(1l, "New user created at Antwerp");
         Response output = ClientBuilder.newClient()
@@ -111,7 +120,7 @@ public class NotificationRestServiceTest {
 
 
     @Test
-    @Order(5) 
+    @Order(6) 
     public void testDelete() {
         Response output = ClientBuilder.newClient().target(serverUri).path("/api").path("/notifications/1").request()
                 .delete();
@@ -120,14 +129,7 @@ public class NotificationRestServiceTest {
     }
 
 
-    @Test
-    @Order(6) 
-    public void testFetchByHtml() {
-        Response output = ClientBuilder.newClient().target(serverUri).path("/api").path("/notifications/1/html").request()
-                .get();
-        assertEquals(200, output.getStatus(), "Should return status 200");
-        assertNotNull(output.getEntity(),"Should return notification");
-    }
+
 
 
     // @Test

@@ -1,10 +1,12 @@
 package org.project.example.websockets;
 
+import java.io.IOException;
 import java.net.URI;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.ContainerProvider;
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -14,6 +16,7 @@ import javax.websocket.WebSocketContainer;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.project.example.dto.Message;
 
 @ClientEndpoint(decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class ChatEndPointClient {
@@ -26,7 +29,7 @@ public class ChatEndPointClient {
     public ChatEndPointClient(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            container.connectToServer(this, endpointURI);
+            this.userSession = container.connectToServer(this, endpointURI);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -39,15 +42,15 @@ public class ChatEndPointClient {
      */
     @OnOpen
     public void onOpen(Session userSession) {
-        log.info("opening websocket");
-        this.userSession = userSession;
+        log.info("websocket session opened on client");
+        //this.userSession = userSession;
     }
 
     /**
      * Callback hook for Connection close events.
      *
      * @param userSession the userSession which is getting closed.
-     * @param reason the reason for connection close
+     * @param reason      the reason for connection close
      */
     @OnClose
     public void onClose(Session userSession, CloseReason reason) {
@@ -56,12 +59,14 @@ public class ChatEndPointClient {
     }
 
     /**
-     * Callback hook for Message Events. This method will be invoked when a client send a message.
+     * Callback hook for Message Events. This method will be invoked when a client
+     * send a message.
      *
      * @param message The text message
      */
     @OnMessage
-    public void onMessage(String message) {
+    public void onMessage(Message message) {
+        log.info("Message received on client: " + message.getContent());
         if (this.messageHandler != null) {
             this.messageHandler.handleMessage(message);
         }
@@ -80,9 +85,12 @@ public class ChatEndPointClient {
      * Send a message.
      *
      * @param message
+     * @throws EncodeException
+     * @throws IOException
      */
-    public void sendMessage(String message) {
-        this.userSession.getAsyncRemote().sendText(message);
+    public void sendMessage(Message message) throws IOException, EncodeException {
+        log.info("sending message to server: " + message.getContent());
+        this.userSession.getBasicRemote().sendObject(message);
     }
 
     /**
@@ -90,6 +98,6 @@ public class ChatEndPointClient {
      *
      */
     public static interface MessageHandler {
-        public void handleMessage(String message);
+        public void handleMessage(Message message);
     }
 }

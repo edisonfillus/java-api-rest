@@ -5,6 +5,13 @@ public class Message {
     private String to;
     private String content;
 
+    public Message(){
+    }
+
+    public Message(String content){
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return super.toString();

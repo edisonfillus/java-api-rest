@@ -14,6 +14,8 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.project.example.dto.Message;
 
 @ServerEndpoint( 
@@ -21,25 +23,24 @@ import org.project.example.dto.Message;
   decoders = MessageDecoder.class, 
   encoders = MessageEncoder.class )
 public class ChatEndPointServer {
+
+    private static Logger log = LogManager.getLogger(ChatEndPointServer.class);
+
     private Session session;
     private static final Set<ChatEndPointServer> chatEndpoints = new CopyOnWriteArraySet<>();
     private static HashMap<String, String> users = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException {
-
         this.session = session;
         chatEndpoints.add(this);
         users.put(session.getId(), username);
-
-        Message message = new Message();
-        message.setFrom(username);
-        message.setContent("Connected!");
-        broadcast(message);
+        log.info("websocket session opened on server: " + username);
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException {
+        log.info("Message received on Server: " + message.getContent());
         message.setFrom(users.get(session.getId()));
         broadcast(message);
     }
@@ -47,15 +48,11 @@ public class ChatEndPointServer {
     @OnClose
     public void onClose(Session session) throws IOException, EncodeException {
         chatEndpoints.remove(this);
-        Message message = new Message();
-        message.setFrom(users.get(session.getId()));
-        message.setContent("Disconnected!");
-        broadcast(message);
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        // Do error handling here
+        log.error(throwable);
     }
 
     private static void broadcast(Message message) throws IOException, EncodeException {
