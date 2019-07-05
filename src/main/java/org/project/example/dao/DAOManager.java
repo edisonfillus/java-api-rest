@@ -8,12 +8,21 @@ import javax.sql.DataSource;
 import org.project.example.dao.impl.PersonDAO;
  
 public class DAOManager {
+
     //http://tutorials.jenkov.com/java-persistence/dao-manager.html
     private static DataSource dataSource = null; // Singleton Datasource
-    protected Connection connection = null; // Instance connection
-    protected PersonDAO personDAO = null; // Instance DAO
+    private Connection connection = null; // Instance connection
+    private DAOConnectionManager connectionManager; // Wrapper for connection
+    
+    // Available DAOs
+    private PersonDAO personDAO = null; // Instance DAO
 
-    public Connection getConnection() throws SQLException {
+    /**
+     * Lazy load JDBC Connection
+     * @return
+     * @throws SQLException
+     */
+    private Connection getConnection() throws SQLException {
         if (this.connection == null) {
             this.connection = dataSource.getConnection();
             this.connection.setAutoCommit(false);
@@ -21,9 +30,25 @@ public class DAOManager {
         return this.connection;
     }
 
+    /**
+     * Lazy load Connection Wrapper
+     * @return
+     * @throws SQLException
+     */
+    private DAOConnectionManager getConnectionManager() throws SQLException {
+        if(this.connectionManager == null){
+            this.connectionManager = new DAOConnectionManager(getConnection());
+        }
+        return this.connectionManager;
+    }
+
+
+    /**
+     * Lazy load Person DAO
+     */
     public PersonDAO getPersonDao() throws SQLException {
         if (this.personDAO == null) {
-            this.personDAO = new PersonDAO(this);
+            this.personDAO = new PersonDAO(getConnectionManager());
         }
         return this.personDAO;
     }
