@@ -264,6 +264,15 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Tomcat for JNDI use in JUnit -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>9.0.21</version>
+			<scope>test</scope>
+		</dependency>
+		
+		
 		<!-- Support for Websockets-->
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
@@ -286,6 +295,12 @@
 			<artifactId>apache-jstl</artifactId>
 			<version>9.4.19.v20190610</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.199</version>
 		</dependency>
 		
 		<dependency>
