@@ -16,36 +16,47 @@ public class PersonDAO {
         this.connection = connection;
     }
 
-    /**
-     * 
-     * @param person Person to create
-     * @return Person created with id
-     * @throws SQLException
-     */
     public Person createPerson(Person person) throws SQLException {
         String sql = new StringBuilder()
-            .append("INSERT INTO PERSON (NAME)")
+            .append("INSERT INTO PERSON (NAME) ")
             .append("VALUES (?);").toString();
 
-        // prepared statement para inserção
-        PreparedStatement stmt = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-        // seta os valores
-        stmt.setString(1, person.getName());
-        int affectedRows = stmt.executeUpdate();
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, person.getName());
+            
+            int affectedRows = stmt.executeUpdate();
 
-        if (affectedRows == 0) {
-            throw new SQLException("Creating person failed, no rows affected.");
-        }
-
-        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                person.setId(generatedKeys.getLong(1));
+            if (affectedRows == 0) {
+                throw new SQLException("Creating person failed, no rows affected.");
             }
-            else {
-                throw new SQLException("Creating person failed, no ID obtained.");
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    person.setId(generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating person failed, no ID obtained.");
+                }
             }
         }
+        return person;
+    }
 
+    public Person findPerson(long id) throws SQLException {
+        Person person = null;
+        String sql = new StringBuilder()
+            .append("SELECT NAME ")
+            .append("FROM PERSON ")
+            .append("WHERE ID = ?").toString();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                person = new Person();
+                person.setId(id);
+                person.setName(rs.getString("NAME"));
+            } 
+        }
         return person;
     }
 

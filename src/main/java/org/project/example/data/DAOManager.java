@@ -1,15 +1,14 @@
 package org.project.example.data;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.h2.jdbcx.JdbcDataSource;
 import org.project.example.data.impl.PersonDAO;
 
 public class DAOManager implements AutoCloseable {
@@ -39,7 +38,7 @@ public class DAOManager implements AutoCloseable {
     public DAOConnectionManager getConnectionManager() {
         return connectionManager;
     }
-    
+
     @Override
     public void close() throws SQLException {
         connection.close();
@@ -53,32 +52,21 @@ public class DAOManager implements AutoCloseable {
         connection.rollback();
     }
 
-
     public static class Builder {
 
         private boolean autoCommit = true;
-        private static DataSource dataSource = null; // Datasource singleton
-        private static final String PROPERTIES_FILE_NAME = "persistence.properties";
 
-        private DataSource getDataSource() throws SQLException {
-            if (dataSource == null) {
-                InputStream inputStream = DAOManager.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
-                Properties prop = new Properties();
-                if (inputStream == null) {
-                    throw new SQLException(new FileNotFoundException(
-                            "property file '" + PROPERTIES_FILE_NAME + "' not found in the classpath"));
-                }
-                try {
-                    prop.load(inputStream);
-                } catch (IOException e) {
-                    throw new SQLException(e);
-                }
-                JdbcDataSource ds = new JdbcDataSource();
-                ds.setURL(prop.getProperty("jdbc.url"));
-                return ds;
-
+        private Connection getConnection() throws SQLException {
+            Connection conn = null;
+            try {
+                String DATASOURCE_CONTEXT = "java:/example-ds";
+                Context initialContext = new InitialContext();
+                DataSource datasource = (DataSource) initialContext.lookup(DATASOURCE_CONTEXT);
+                conn = datasource.getConnection();
+            } catch (NamingException ex) {
+                throw new SQLException(ex.getMessage(),ex);
             }
-            return dataSource;
+            return conn;
         }
 
         public Builder() {
@@ -90,13 +78,11 @@ public class DAOManager implements AutoCloseable {
         }
 
         public DAOManager build() throws SQLException {
-            Connection conn = getDataSource().getConnection();
-            conn.setAutoCommit(autoCommit);
+            Connection conn = getConnection();
+            conn.setAutoCommit(this.autoCommit);
             return new DAOManager(conn);
 
         }
     }
-
- 
 
 }

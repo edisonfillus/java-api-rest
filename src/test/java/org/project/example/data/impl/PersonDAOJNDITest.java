@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.project.example.server.JettyIntegrationTest;
 
 public class PersonDAOJNDITest {
 
@@ -35,14 +34,8 @@ public class PersonDAOJNDITest {
 
             JdbcConnectionPool ds = JdbcConnectionPool.create(
                     "jdbc:h2:file:./src/test/resources/test.db;FILE_LOCK=NO;MVCC=TRUE;DB_CLOSE_ON_EXIT=TRUE", "sa", "sa");
-            // Construct DataSource
-            // OracleConnectionPoolDataSource ds = new
-            // OracleConnectionPoolDataSource();
-            // ds.setURL("jdbc:oracle:thin:@host:port:db");
-            // ds.setUser("MY_USER_NAME");
-            // ds.setPassword("MY_USER_PASSWORD");
 
-            ic.bind("java:/mydatasourcename", ds);
+            ic.bind("java:/example-ds", ds);
         } catch (NamingException e) {
             log.error(e, e);
         }
@@ -56,7 +49,7 @@ public class PersonDAOJNDITest {
         Context initCtx = new InitialContext();
 
         // Look up our datasource
-        DataSource ds = (DataSource) initCtx.lookup("java:/mydatasourcename");
+        DataSource ds = (DataSource) initCtx.lookup("java:/example-ds");
 
         Connection conn = ds.getConnection();
         Statement stmt = conn.createStatement();
