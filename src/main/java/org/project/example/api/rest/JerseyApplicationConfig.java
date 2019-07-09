@@ -5,7 +5,7 @@ import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 
 public class JerseyApplicationConfig extends ResourceConfig {
     public JerseyApplicationConfig() {
-        packages("org.project.example.rest");
+        packages("org.project.example.api.rest");
         property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "templates");
         register(FreemarkerMvcFeature.class);
     }
