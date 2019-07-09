@@ -47,7 +47,7 @@ public class PersonDAOTest {
         // Truncate Database
         try (DAOManager daoManager = new DAOManager.Builder().build()) {
             DAOConnectionManager conn = daoManager.getConnectionManager();
-            conn.createStatement().executeUpdate("TRUNCATE TABLE PERSON");
+            conn.createStatement().executeUpdate("TRUNCATE TABLE person");
         } catch (SQLException e) {
             log.error(e, e);
             throw e;

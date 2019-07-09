@@ -21,7 +21,7 @@ public class PersonDAO {
 
     public Person createPerson(Person person) throws SQLException {
         String sql = new StringBuilder()
-            .append("INSERT INTO PERSON (NAME) ")
+            .append("INSERT INTO person (name) ")
             .append("VALUES (?);").toString();
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -47,9 +47,9 @@ public class PersonDAO {
     public Person findPersonById(long id) throws SQLException {
         Person person = null;
         String sql = new StringBuilder()
-            .append("SELECT NAME ")
-            .append("FROM PERSON ")
-            .append("WHERE ID = ?").toString();
+            .append("SELECT name ")
+            .append("FROM person ")
+            .append("WHERE person_id = ?").toString();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
 
@@ -57,7 +57,7 @@ public class PersonDAO {
             if (rs.next()) {
                 person = new Person();
                 person.setId(id);
-                person.setName(rs.getString("NAME"));
+                person.setName(rs.getString("name"));
             } 
         }
         return person;
@@ -65,9 +65,9 @@ public class PersonDAO {
 
     public void updatePerson(Person person) throws SQLException {
         String sql = new StringBuilder()
-            .append("UPDATE PERSON ")
-            .append("SET NAME=? ")
-            .append("WHERE ID=?").toString();
+            .append("UPDATE person ")
+            .append("SET name=? ")
+            .append("WHERE person_id=?").toString();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, person.getName());
             stmt.setLong(2,person.getId());
@@ -81,8 +81,8 @@ public class PersonDAO {
 
     public void deletePersonById(Long id) throws SQLException {
         String sql = new StringBuilder()
-            .append("DELETE FROM PERSON ")
-            .append("WHERE ID=?").toString();
+            .append("DELETE FROM person ")
+            .append("WHERE person_id=?").toString();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1,id);
 
@@ -96,14 +96,14 @@ public class PersonDAO {
     public List<Person> listAllPerson() throws SQLException {
         List<Person> persons = new ArrayList<Person>();
         String sql = new StringBuilder()
-            .append("SELECT ID,NAME ")
-            .append("FROM PERSON ").toString();
+            .append("SELECT person_id,name ")
+            .append("FROM person ").toString();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Person person = new Person();
-                person.setId(rs.getLong("ID"));
-                person.setName(rs.getString("NAME"));
+                person.setId(rs.getLong("person_id"));
+                person.setName(rs.getString("name"));
                 persons.add(person);
             } 
         }
